@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="htttp://wwww.thymeleaf.org"><!--通过该命名空间将静态页面 -->
+<head>
+    <meta content="text/html; charset=UTF-8"/>
+</head>
+<body>
+<div th:replace="header :: header"></div>
+<div class="value1">
+    <span th:text="${value1}">
+    </span>
+</div>
+<table class="table">
+    <tbody>
+        <td th:each="color:${colors}" th:text="${color}">
+        </td>
+    </tbody>
+</table>
+<pre>
+    Hello!
+    ${news.value1}
+    ${value2}
+</pre>
+
+</body>
+</html>

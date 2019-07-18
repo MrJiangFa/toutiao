@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="header :: head"></head>
+<body class="welcome_index">
+
+<header class="navbar navbar-default navbar-static-top bs-docs-nav" id="top" role="banner">
+    <div class="container">
+        <div class="navbar-header">
+            <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+
+            <a href="/" class="navbar-brand logo">
+                <h1>头条资讯</h1>
+                <h3>你关心的才是头条</h3>
+            </a>
+        </div>
+
+        <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+
+            <ul class="nav navbar-nav navbar-right">
+
+
+                <li class="js-share" th:if="${user}"><a href="javascript:void(0);">分享</a></li>
+                <li class="" th:if="${user}"><a th:href="@{/msg/conversationList}">站内信</a></li>
+                <li class="" th:if="${user}"><a th:href="@{/logout/}">[[${user.name}]]</a></li>
+
+                <li class="js-login" th:unless="${user}"><a href="javascript:void(0);">登陆</a></li>
+
+            </ul>
+
+        </nav>
+    </div>
+</header>
+
+    <div id="main">
+    <!--
+        <div class="hero">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="app-iphone">
+                            <div class="carousel slide" data-ride="carousel" data-interval="3000">
+                                <div class="carousel-inner" role="listbox">
+                                    <div class="item">
+                                      <img alt="牛客网应用截图阅读精选" src="http://images.nowcoder.com/images/20141231/622873_1420036789276_622873_1420036771761_%E8%98%91%E8%8F%87.jpg@0e_200w_200h_0c_1i_1o_90Q_1x">
+                                      <div class="carousel-caption">阅读精选</div>
+                                    </div>
+                                    <div class="item active">
+                                      <img alt="牛客网应用截图订阅主题" src="http://images.nowcoder.com/images/20141231/622873_1420036789276_622873_1420036771761_%E8%98%91%E8%8F%87.jpg@0e_200w_200h_0c_1i_1o_90Q_1x">
+                                      <div class="carousel-caption">订阅主题</div>
+                                    </div>
+                                    <div class="item">
+                                      <img alt="牛客网应用截图分享干货" src="http://images.nowcoder.com/images/20141231/622873_1420036789276_622873_1420036771761_%E8%98%91%E8%8F%87.jpg@0e_200w_200h_0c_1i_1o_90Q_1x">
+                                      <div class="carousel-caption">分享干货</div>
+                                    </div>
+                                    <div class="item">
+                                      <img alt="牛客网应用截图兑换礼品" src="http://images.nowcoder.com/images/20141231/622873_1420036789276_622873_1420036771761_%E8%98%91%E8%8F%87.jpg@0e_200w_200h_0c_1i_1o_90Q_1x">
+                                      <div class="carousel-caption">兑换礼品</div>
+                                    </div>
+                                    <div class="item">
+                                      <img alt="牛客网应用截图建立品牌" src="http://images.nowcoder.com/images/20141231/622873_1420036789276_622873_1420036771761_%E8%98%91%E8%8F%87.jpg@0e_200w_200h_0c_1i_1o_90Q_1x">
+                                      <div class="carousel-caption">建立品牌</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="intro">
+                            <div class="title">
+                              <h1>牛客网</h1>
+                              <h3>程序员必装的 App</h3>
+                            </div>
+                            <div class="media">
+                                <div class="media-left">
+                                    <img class="media-object app-qrcode" src="/images/res/qrcode.png" alt="App qrcode web index">
+                                </div>
+                                <div class="media-body">
+                                    <div class="buttons">
+                                      <p><a onclick="_hmt.push([&#39;_trackEvent&#39;, &#39;app&#39;, &#39;download&#39;, &#39;ios&#39;])" class="btn btn-success btn-lg" href="http://nowcoder.com/s/ios"><i class="fa icon-apple"></i> iPhone 版</a></p>
+                                      <p><a onclick="_hmt.push([&#39;_trackEvent&#39;, &#39;app&#39;, &#39;download&#39;, &#39;apk&#39;])" class="btn btn-success btn-lg" href="http://nowcoder.com/s/apk"><i class="fa icon-android"></i> Android 版</a></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        -->
+
+        <div class="container" id="daily">
+            <div class="jscroll-inner">
+                <div class="daily">
+
+                    <h3 class="date">
+                        <i class="fa icon-calendar"></i>
+                        <span>头条资讯</span>
+                        <small>2016-05-24</small>
+                    </h3>
+
+                    <div class="posts" th:each="vo,voIter:${vos}">
+                        <div class="post">
+                            <div class="votebar">
+                                <button class="click-like up pressed" th:data-id="${vo.get('news').id}" aria-pressed="false" title="赞同" th:if="${vo.get('like')>0}"><i class="vote-arrow"></i><span class="count">[[${vo.get('news').likeCount}]]</span></button>
+                                <button class="click-like up " th:data-id="${vo.get('news').id}" aria-pressed="false" title="赞同" th:unless="${vo.get('like')>0}"><i class="vote-arrow"></i><span class="count">[[${vo.get('news').likeCount}]]</span></button>
+
+                                <button class="click-dislike down pressed" th:data-id="${vo.get('news').id}" aria-pressed="true" title="反对" th:if="${vo.get('like')<0}"><i class="vote-arrow"></i></button>
+                                <button class="click-dislike down" th:data-id="${vo.get('news').id}" aria-pressed="true" title="反对" th:unless="${vo.get('like')<0}"><i class="vote-arrow"></i></button>
+                            </div>
+                            <div class="content" th:href="@{${vo.get('news').link}}">
+                                <div class="content-img">
+                                    <img th:src="@{${vo.get('news').image}}" alt="">
+                                </div>
+                                <div class="content-main">
+                                    <h3 class="title">
+                                        <a target="_blank" rel="external nofollow" th:href="@{${vo.get('news').link}}" th:text="${vo.get('news').title} + '   ' + ${#dates.format(vo.get('news').createdDate, 'yyyy.MM.dd HH:mm')}"></a>
+                                    </h3>
+                                    <div class="meta" >
+                                        [[${vo.get('news').link}]]
+                                        <!--th:href="@{${vo.get('news').link}}" th:text="${vo.get('news').link}"-->
+                                        <a th:href="@{'/news/'+${vo.get('news').id}}">
+                                            <i class="fa icon-comment"></i>[[${vo.get('news').commentCount}]]
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="user-info">
+                                <div class="user-avatar">
+                                    <a th:href="@{'/user/'+${vo.get('user').id}}"><img width="32" class="img-circle" th:src="@{${vo.get('user').headUrl}}"/></a>
+                                </div>
+
+                                <!--
+                                <div class="info">
+                                    <h5>分享者</h5>
+
+                                    <a href="http://nowcoder.com/u/251205"><img width="48" class="img-circle" src="http://images.nowcoder.com/images/20141231/622873_1420036789276_622873_1420036771761_%E8%98%91%E8%8F%87.jpg@0e_200w_200h_0c_1i_1o_90Q_1x" alt="Thumb"></a>
+
+                                    <h4 class="m-b-xs">${vo.user.name}</h4>
+                                    <a class="btn btn-default btn-xs" href="http://nowcoder.com/signin"><i class="fa icon-eye"></i> 关注TA</a>
+                                </div>
+                                -->
+                            </div>
+
+                            <div class="subject-name" >来自 <a th:href="@{'/user/'+${vo.get('user').id}}" th:text="${vo.get('user').id}"></a></div>
+                        </div>
+                        <!--
+                        <div class="alert alert-warning subscribe-banner" role="alert">
+                          《头条八卦》，每日 Top 3 通过邮件发送给你。      <a class="btn btn-info btn-sm pull-right" href="http://nowcoder.com/account/settings">立即订阅</a>
+                        </div>
+                        -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+
+<footer th:replace="footer :: footer"></footer>
+<div th:replace="footer :: quick-download"></div>
+
+  <script>
+  </script>
+
+
+</body></html>
