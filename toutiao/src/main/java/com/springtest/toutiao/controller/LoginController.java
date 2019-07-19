@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -53,13 +54,13 @@ public class LoginController {
     //登录
     @RequestMapping(path = {"/login/"}, method = {RequestMethod.GET, RequestMethod.POST})
     @ResponseBody
-    public String login(Model model, @RequestParam("username") String username,
+    public String login(@RequestParam("username") String username,
                         @RequestParam("password") String password,
                         @RequestParam(value = "rember", defaultValue = "0") int rememberme,
-                        HttpServletResponse response, HttpSession session) {
+                        HttpServletRequest request, HttpServletResponse response) {
         try {
             Map<String, Object> map = userService.login(username, password);
-//            String sessionId = session.getId();
+            HttpSession session = request.getSession();
             if (map.containsKey("ticket")) {
                 Cookie cookie = new Cookie("ticket", map.get("ticket").toString());
                 cookie.setPath("/");//设置cookie全路径有效

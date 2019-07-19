@@ -6,17 +6,17 @@ import com.springtest.toutiao.model.LoginTicket;
 import com.springtest.toutiao.model.User;
 import com.springtest.toutiao.util.ToutiaoUtil;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.*;
 
 
 @Service
 public class UserService {
-    @Autowired
+    @Resource
     private UserDao userDao;
-    @Autowired
+    @Resource
     private LoginTicketDao loginTicketDao;
 
     public User getUser(int id) {
@@ -76,8 +76,7 @@ public class UserService {
         }
 
 
-        if (!ToutiaoUtil.MD5(password+user.getSalt()).equals(user.getPassword())) {
-            System.out.println(1111);
+        if (!ToutiaoUtil.MD5(password + user.getSalt()).equals(user.getPassword())) {
             map.put("msgpwd", "密码不正确");
             return map;
         }
@@ -102,4 +101,7 @@ public class UserService {
     public void logout(String ticket) {
         loginTicketDao.updateStatus(ticket, 1);
     }
+
+
+
 }
