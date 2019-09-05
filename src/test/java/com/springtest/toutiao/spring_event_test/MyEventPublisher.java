@@ -12,5 +12,6 @@ public class MyEventPublisher {
     //使用ApplicationContext publishEvent() 来发布事件
     public void publish(String msg) {
         applicationContext.publishEvent(new MyEvent(this, msg));
+
     }
 }
